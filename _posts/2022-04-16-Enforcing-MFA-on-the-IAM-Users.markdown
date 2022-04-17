@@ -337,7 +337,7 @@ We have defined two environment variables in Lambda's Configuration section whic
 
 Line 34 - 39: We have imported various Libraries which we will be using to achieve the objective.
 
-Line 41 - 153:
+Line 41 - 153: 
 We have defined policy which will be created in every account wherever our lambda runs. For policy we have used Deny all approach i.e We have just allowed user to setup MFA and perform basic tasks.
 
 Line 169-178: We have defined global variables, Global Variable in coding world means that the variable can be used by all the functions and they can directly perform actions on that.
@@ -366,7 +366,7 @@ In order to get this resolved, we have used get_attached_policy_count()(Line 183
 Since we now understand the flow of our lambda function , Let's get our hands rolling on the Cloudformation template.
 
 Let's look at our CFT-:
-```
+```json
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description" : "Deploy Lambda Function to attach Force MFA policy to the user who had not enabled Physical/Virtual MFA.",

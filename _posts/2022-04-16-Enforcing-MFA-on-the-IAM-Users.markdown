@@ -369,11 +369,11 @@ When Lambda is triggered, **lambda_handler** is the first function which is exec
 
      > As the name suggests, we have used this function to send notification to our slack channel if MFA policy is attached to any user or our lambda failed in someway or the other. 
      
-![Macbook]({{site.baseurl}}/assets/img/slack.jpg){: .center-image max-width="100" }
+![Macbook]({{site.baseurl}}/assets/img/slack.png)
 
 The classic use case which we encountered because of which our Lambda didn't work was that AWS constraints on how many policies(AWS Managed + Customer Managed) can be attached to an IAM User. We found that only 10 policies in total can be attached. So in case, there are 10 policies already attached, our objective to enforce MFA on IAM user who have not enabled MFA would fail badly. 
 
-![Macbook]({{site.baseurl}}/assets/img/slack2.jpg){: .center-image max-width="100" }
+![Macbook]({{site.baseurl}}/assets/img/slack2.png){: .center-image max-width="100" }
 
 In order to get this resolved, we have used **get_attached_policy_count()**(Line 183-193) function which will do the heavy lifting for us.
 

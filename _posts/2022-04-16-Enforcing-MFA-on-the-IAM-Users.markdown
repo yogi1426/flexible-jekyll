@@ -335,30 +335,34 @@ We have defined two environment variables in Lambda's Configuration section whic
 * WEBHOOK_URL: This Environment variable we have used to define Webhook url for slack in order to trigger slack notification from our Lambda.
 * WHITELIST_TAG: At times, there are service accounts which are created as an IAM User(Though not a good practice). Instead, We should consider using IAM Roles for Service Accounts.
 
-Line 34 - 39: We have imported various Libraries which we will be using to achieve the objective.
+**Line 34 - 39:** 
+We have imported various Libraries which we will be using to achieve the objective.
 
-Line 41 - 153: 
+**Line 41 - 153: **
 We have defined policy which will be created in every account wherever our lambda runs. For policy we have used Deny all approach i.e We have just allowed user to setup MFA and perform basic tasks.
 
-Line 169-178: We have defined global variables, Global Variable in coding world means that the variable can be used by all the functions and they can directly perform actions on that.
+**Line 169-178:** 
+We have defined global variables, Global Variable in coding world means that the variable can be used by all the functions and they can directly perform actions on that.
 
-When Lambda is triggered, lambda_handler is the first function which is executed. Our lambda will make sure of the following on every run:-
+When Lambda is triggered, **lambda_handler** is the first function which is executed. Our lambda will make sure of the following on every run:-
 
 * If the Policy JSON already exist in the account, if not it will create the IAM policy so that it can attach to the users. The reason to check and create policy in the lambda function itself is to scale our lambda function and reduce the manual efforts of creating IAM policy for every account. Nowadays, most companies use multiple accounts for there various use case, it becomes inefficient for us to create IAM policy for every account. 
-Function used: is_policy_exist()
+**Function used:** is_policy_exist()
 
 * Check whether the user already whitelisted: We are whitelisting users if it is a service account or any other account which is defined in WHITELIST_TAG environment variable. 
-Function used: is_user_whitelisted()
+**Function used:** is_user_whitelisted()
 
 * We will not attach the policy if Enforce MFA policy is already attached to the user. This may have happened in the old run. 
-Function used: is_policy_attached()
+**Function used:** is_policy_attached()
 
 * Our Lambda will not attach policy if the user has already setup MFA.
-Function used: is_mfa_enabled()
+**Function used:** is_mfa_enabled()
 
-* get_account_alias(): This main objective of this function is to get the Alias Name so that it becomes easy for us to recognise the account whenever we recieve notification. As we all know, it is easy to remember name than numbers.
+* **get_account_alias():** 
+This main objective of this function is to get the Alias Name so that it becomes easy for us to recognise the account whenever we recieve notification. As we all know, it is easy to remember name than numbers.
 
-* send_slack_notification(): As the name suggests, we have used this function to send notification to our slack channel if MFA policy is attached to any user or our lambda failed in someway or the other. 
+* **send_slack_notification():**
+ As the name suggests, we have used this function to send notification to our slack channel if MFA policy is attached to any user or our lambda failed in someway or the other. 
 
 The classic use case which we encountered because of which our Lambda didn't work was that AWS constraints on how many policies(AWS Managed + Customer Managed) can be attached to an IAM User. We found that only 10 policies in total can be attached. So in case, there are 10 policies already attached, our objective to enforce MFA on IAM user who have not enabled MFA would fail badly. 
 In order to get this resolved, we have used get_attached_policy_count()(Line 183-193) function which will do the heavy lifting for us.
@@ -508,7 +512,7 @@ Let's look at our CFT-:
   }
 }
 ```
-Line 354 - 385:
+**Line 354 - 385:**
 We have defined Parameters in `Parameters` section of Stacks. Our CFT is expecting following parameters:
 * LambdaHandler : This executes lambda_handler() function of our lambda code.
 * S3Bucket: Where our Lambda code is stored.
@@ -517,10 +521,10 @@ We have defined Parameters in `Parameters` section of Stacks. Our CFT is expecti
 * SlackWebhookParameter: Slack Web hook url
 * WhitelistTag: The key:value pair against which we want to whitelist IAM Users(Eg: userType:Service).
 
-Line 435-465:
+**Line 435-465:**
 We have created IAM Policy for our lambda function in order to authorise our Lambda to make changes to an IAM user or make changes in our AWS account.
 
-Line 467-479: 
+**Line 467-479:** 
 ScheduleRule block is the rule used to trigger EventBridge Service of AWS which helps us to run our EnforceMFALambda every 12PM(UTC).
 
 ### Conclusion

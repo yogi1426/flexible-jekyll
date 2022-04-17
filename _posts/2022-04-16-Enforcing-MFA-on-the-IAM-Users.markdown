@@ -9,7 +9,7 @@ tags: [Cloud Security,Security,AWS Security]
 ---
 
 For the most IT Industry it is a common miss that nowadays every Security team is having to get engineers use MFA on the cloud accounts. Hence, leading to an easy attack surface for hackers around the globe.
-Why is MFA important you may ask? If you have already not gone through this Blog, I would request you to go through this once.
+Why is MFA important you may ask? If you have already not gone through this [Blog](https://www.yogendra-swaroop.tech/save-your-social-media/), I would request you to go through this once.
 
 ### Main Objective
 Problem Statement came when we saw that there are many users in our AWS infrastructure that are not using MFA and because of which our Security Hub Score was also getting impacted.

@@ -23,7 +23,7 @@ AWS Lambda is a serverless, event-driven compute service that lets you run code 
 You can trigger Lambda from over 200 AWS services and software as a service (SaaS) applications, and only pay for what you use. 
 Our Lambda function will get the IAM Users on which MFA is not enabled, create our custom made mfa policy and attach it to the IAM User. We will be scheduling event which will run our Lambda code everyday on defined interval of time. 
 
-> Learn more about AWS Lambda: https://www.serverless.com/aws-lambda 
+> [Learn more about AWS Lambda](https://www.serverless.com/aws-lambda) 
 
 ### Cloudformation:
 AWS CloudFormation is a Infrastructure as a Code(IAC) service that helps you model and set up your AWS resources so that you can spend less time managing those resources and more time focusing on your applications that run in AWS. Cloudformation is defining the template which will automatically provision and setup the infrastructure for you. 
@@ -33,12 +33,13 @@ Classic Example: Defining the stack which will create EC2 Instance, Install Word
 How cloudformation works?
 For Cloudformation service to work, you create a template that describes all the AWS resources that you want (like Amazon EC2 instances or Amazon RDS DB instances), and CloudFormation takes care of provisioning and configuring those resources for you. You don't need to individually create and configure AWS resources and figure out what's dependent on what, CloudFormation handles that for you.
 
-> Read more about Cloudformation: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
+> [Read more about Cloudformation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 
 ### AWS Eventbridge: 
 Amazon EventBridge is a serverless event bus that makes it easier to build event-driven applications at scale using events generated from your applications, integrated Software-as-a-Service (SaaS) applications, and AWS services.
 For our use case, we used AWS Eventbridge to schedule an event. We will be using AWS Eventbridge to trigger our Lambda at our desired time.
-> More about Eventbridge: https://aws.amazon.com/eventbridge/
+
+> [More about Eventbridge](https://aws.amazon.com/eventbridge/)
 
 ### Slack: 
 We will be using slack to send notification whenever there is any Enforce MFA policy attached to an IAM User.

@@ -523,4 +523,5 @@ Line 467-479:
 ScheduleRule block is the rule used to trigger EventBridge Service of AWS which helps us to run our EnforceMFALambda every 12PM(UTC).
 
 ###Conclusion
+
 By Combining all the above blocks, we were able to achieve our main objective of getting our IAM users to setup Multi-factor authentication. Using Cloudformation stacksets helped us to Scale so that whenever new account is spin up, the same stack will be created, hence giving us better AWS security.

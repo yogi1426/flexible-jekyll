@@ -349,18 +349,16 @@ We have defined global variables, Global Variable in coding world means that the
 
 When Lambda is triggered, **lambda_handler** is the first function which is executed. Our lambda will make sure of the following on every run:-
 
-* If the Policy JSON already exist in the account, if not it will create the IAM policy so that it can attach to the users. The reason to check and create policy in the lambda function itself is to scale our lambda function and reduce the manual efforts of creating IAM policy for every account. Nowadays, most companies use multiple accounts for there various use case, it becomes inefficient for us to create IAM policy for every account. 
+* If the Policy JSON already exist in the account, if not it will create the IAM policy so that it can attach to the users. The reason to check and create policy in the lambda function itself is to scale our lambda function and reduce the manual efforts of creating IAM policy for every account. Nowadays, most companies use multiple accounts for there various use case, it becomes inefficient for us to create IAM policy for every account.
 **Function used:** is_policy_exist()
 
 * Check whether the user already whitelisted: We are whitelisting users if it is a service account or any other account which is defined in WHITELIST_TAG environment variable.
 **Function used:** is_user_whitelisted()
 
 * We will not attach the policy if Enforce MFA policy is already attached to the user. This may have happened in the old run. 
-
 **Function used:** is_policy_attached()
 
 * Our Lambda will not attach policy if the user has already setup MFA.
-
 **Function used:** is_mfa_enabled()
 
 * **get_account_alias():** 

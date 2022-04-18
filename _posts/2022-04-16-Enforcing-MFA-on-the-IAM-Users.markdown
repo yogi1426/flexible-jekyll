@@ -50,7 +50,7 @@ Before we dig deeper, In nutshell to understand our methodology, whenever we dep
 
 First things first, since our entire exercise is dependend on our Lambda function, Let's start with that. Below attached is the Lambda code template.
 
-{% highlight python linenos %}
+{% highlight python %}
 ```
 import json
 import boto3

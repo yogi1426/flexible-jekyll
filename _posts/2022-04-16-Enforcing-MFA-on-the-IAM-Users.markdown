@@ -50,15 +50,25 @@ Before we dig deeper, In nutshell to understand our methodology, whenever we dep
 
 First things first, since our entire exercise is dependend on our Lambda function, Let's start with that. Below attached is the Lambda code template.
 
-````
-import json
+We have defined two environment variables in Lambda's Configuration section which we have used in our Lambda function
+* **WEBHOOK_URL**: This Environment variable we have used to define Webhook url for slack in order to trigger slack notification from our Lambda.
+* **WHITELIST_TAG**: At times, there are service accounts which are created as an IAM User(Though not a good practice). Instead, We should consider using IAM Roles for Service Accounts.
+
+
+**Line 1 - 6** 
+```
+import json #Line 1
 import boto3
 import os, math
 import requests
 import datetime, time
 from botocore.exceptions import ClientError
+```
+We have imported various Libraries which we will be using to achieve the objective.**
 
-policyJson = {
+**Line 8 - 120:**
+```
+policyJson = { 
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -171,7 +181,9 @@ policyJson = {
         }
     ]
 }
-
+```
+We have defined policy which will be created in every account wherever our lambda runs. For policy we have used Deny all approach i.e We have just allowed user to setup MFA and perform basic tasks.
+```
 headers = {
     'Content-Type': "application/json",
     'User-Agent': "PostmanRuntime/7.19.0",
@@ -184,8 +196,12 @@ headers = {
     'Connection': "keep-alive",
     'cache-control': "no-cache"
     }
+```
+The above **headers** variable is used for sending our notification to our slack.
 
+**Line 136-145:** 
 
+```
 client=boto3.client('iam')
 sns=boto3.client('sns')
 sts = boto3.client('sts')
@@ -196,23 +212,10 @@ response = client.list_users()
 url = os.environ['WEBHOOK_URL']
 MFA_POLICY_NAME = "ForceMFA"
 slack_emoji = ":aws-iam:" 
+```
+We have defined global variables, Global Variable in coding world means that the variable can be used by all the functions and they can directly perform actions on that.
 
-
-
-# Get number of managed Policies attached to the user
-def get_attached_policy_count(username):
- # iam_client = get_iam_client()
-  managed_user_policies = client.list_attached_user_policies(UserName=username)
-  deny_policy_name = 'ForceMFA'
-  attached_policies = managed_user_policies['AttachedPolicies']
-  policy_count = len(attached_policies)
-  for policy in attached_policies:
-    # This is to make sure we don't count our very own attached policy. Because that can be deleted and attached again after updating
-      if policy['PolicyName'] == deny_policy_name:
-          policy_count = policy_count - 1
-  return policy_count
-
-
+```
 def lambda_handler(event,context):
     # Check if the policy exist in this account. If not create one.
     if not is_policy_exist(MFA_POLICY_NAME):
@@ -234,8 +237,18 @@ def lambda_handler(event,context):
             print("Attaching ForceMFA policy to the user {}".format(username))
             slack_response = requests.request("POST", url, data=send_slack_notification(1,username,account_id), headers=headers)
         
-            
-        
+# Get number of managed Policies attached to the user
+def get_attached_policy_count(username):
+ # iam_client = get_iam_client()
+  managed_user_policies = client.list_attached_user_policies(UserName=username)
+  deny_policy_name = 'ForceMFA'
+  attached_policies = managed_user_policies['AttachedPolicies']
+  policy_count = len(attached_policies)
+  for policy in attached_policies:
+    # This is to make sure we don't count our very own attached policy. Because that can be deleted and attached again after updating
+      if policy['PolicyName'] == deny_policy_name:
+          policy_count = policy_count - 1
+  return policy_count       
         
 
 def is_user_whitelisted(username):
@@ -288,8 +301,26 @@ def is_policy_attached(user,userPolicyList):
             print("Ignoring user {}. MFA Policy already exist".format(user))
             return True
     return False
-    
+```    
+When Lambda is triggered, **lambda_handler** is the first function which is executed. Our lambda will make sure of the following on every run:-
 
+* If the Policy JSON already exist in the account, if not it will create the IAM policy so that it can attach to the users. The reason to check and create policy in the lambda function itself is to scale our lambda function and reduce the manual efforts of creating IAM policy for every account. Nowadays, most companies use multiple accounts for there various use case, it becomes inefficient for us to create IAM policy for every account.
+     > **Function used:** is_policy_exist()
+
+* Check whether the user already whitelisted: We are whitelisting users if it is a service account or any other account which is defined in WHITELIST_TAG environment variable.
+     > **Function used:** is_user_whitelisted()
+
+* We will not attach the policy if Enforce MFA policy is already attached to the user. This may have happened in the old run. 
+     > **Function used:** is_policy_attached()
+
+* Our Lambda will not attach policy if the user has already setup MFA.
+     > **Function used:** is_mfa_enabled()
+
+* **get_account_alias():** 
+
+     > This main objective of this function is to get the Alias Name so that it becomes easy for us to recognise the account whenever we recieve notification. As we all know, it is easy to remember name than numbers.
+
+```
 def send_slack_notification(status_code,user,account_id):
     account_alias = get_account_alias()[0]
     payload = ""
@@ -331,45 +362,7 @@ def send_slack_notification(status_code,user,account_id):
         }"""
     time.sleep(3) # To avoid slack api collusion.
     return payload
-
-````
-
-![Macbook]({{site.baseurl}}/assets/img/take-a-break-break.gif){: .center-image }
-
-We have defined two environment variables in Lambda's Configuration section which we have used in our Lambda function
-* **WEBHOOK_URL**: This Environment variable we have used to define Webhook url for slack in order to trigger slack notification from our Lambda.
-* **WHITELIST_TAG**: At times, there are service accounts which are created as an IAM User(Though not a good practice). Instead, We should consider using IAM Roles for Service Accounts.
-
-**Line 1 - 6 ** 
-
-We have imported various Libraries which we will be using to achieve the objective.
-
-**Line 41 - 153:**
-
-We have defined policy which will be created in every account wherever our lambda runs. For policy we have used Deny all approach i.e We have just allowed user to setup MFA and perform basic tasks.
-
-**Line 169-178:** 
-
-We have defined global variables, Global Variable in coding world means that the variable can be used by all the functions and they can directly perform actions on that.
-
-When Lambda is triggered, **lambda_handler** is the first function which is executed. Our lambda will make sure of the following on every run:-
-
-* If the Policy JSON already exist in the account, if not it will create the IAM policy so that it can attach to the users. The reason to check and create policy in the lambda function itself is to scale our lambda function and reduce the manual efforts of creating IAM policy for every account. Nowadays, most companies use multiple accounts for there various use case, it becomes inefficient for us to create IAM policy for every account.
-     > **Function used:** is_policy_exist()
-
-* Check whether the user already whitelisted: We are whitelisting users if it is a service account or any other account which is defined in WHITELIST_TAG environment variable.
-     > **Function used:** is_user_whitelisted()
-
-* We will not attach the policy if Enforce MFA policy is already attached to the user. This may have happened in the old run. 
-     > **Function used:** is_policy_attached()
-
-* Our Lambda will not attach policy if the user has already setup MFA.
-     > **Function used:** is_mfa_enabled()
-
-* **get_account_alias():** 
-
-     > This main objective of this function is to get the Alias Name so that it becomes easy for us to recognise the account whenever we recieve notification. As we all know, it is easy to remember name than numbers.
-
+```
 * **send_slack_notification():**
 
      > As the name suggests, we have used this function to send notification to our slack channel if MFA policy is attached to any user or our lambda failed in someway or the other. 
@@ -380,7 +373,11 @@ The classic use case which we encountered because of which our Lambda didn't wor
 
 ![Macbook]({{site.baseurl}}/assets/img/slack2.png){: .center-image }
 
-In order to get this resolved, we have used **get_attached_policy_count()**(Line 183-193) function which will do the heavy lifting for us.
+In order to get this resolved, we have used **get_attached_policy_count()** function which will do the heavy lifting for us.
+
+
+![Macbook]({{site.baseurl}}/assets/img/take-a-break-break.gif){: .center-image }
+
 
 Since we now understand the flow of our lambda function , Let's get our hands rolling on the Cloudformation template.
 

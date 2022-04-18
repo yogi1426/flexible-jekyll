@@ -525,6 +525,7 @@ Let's look at our CFT-:
 You can see the resources tab in EnforceMFA Stack which shows what all resources were used by our Stackset.
 
 ![Macbook]({{site.baseurl}}/assets/img/resources.png){: .center-image }
+
 **Line 354 - 385:**
 
 > We have defined Parameters in `Parameters` section of Stacks. Our CFT is expecting following parameters:

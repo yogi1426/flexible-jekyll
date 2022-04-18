@@ -50,7 +50,7 @@ Before we dig deeper, In nutshell to understand our methodology, whenever we dep
 
 First things first, since our entire exercise is dependend on our Lambda function, Let's start with that. Below attached is the Lambda code template.
 
-````
+```
 import json
 import boto3
 import os, math
@@ -331,7 +331,7 @@ def send_slack_notification(status_code,user,account_id):
         }"""
     time.sleep(3) # To avoid slack api collusion.
     return payload
-````
+```
 
 ![Macbook]({{site.baseurl}}/assets/img/take-a-break-break.gif){: .center-image }
 

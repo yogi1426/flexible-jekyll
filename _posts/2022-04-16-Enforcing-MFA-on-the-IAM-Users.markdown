@@ -46,6 +46,8 @@ We will be using slack to send notification whenever there is any Enforce MFA po
 
 Before we dig deeper, In nutshell to understand our methodology, whenever we deploy our stack using Cloudformation template, a lambda function is created which makes a JSON Policy so that whenever there is a violation of our MFA, it automatically attaches the Enforce MFA Policy to an IAM User. As a result of which, IAM user is forced to setup Multi factor authentication. Once the policy is attached, our lambda triggers slack notification.
 
+![Macbook]({{site.baseurl}}/assets/img/deeper.jpg){: .center-image }
+
 First things first, since our entire exercise is dependend on our Lambda function, Let's start with that. Below attached is the Lambda code template.
 
 ```
@@ -331,6 +333,8 @@ def send_slack_notification(status_code,user,account_id):
     return payload
 ```
 
+![Macbook]({{site.baseurl}}/assets/img/take-a-break-break.gif){: .center-image }
+
 We have defined two environment variables in Lambda's Configuration section which we have used in our Lambda function
 * **WEBHOOK_URL**: This Environment variable we have used to define Webhook url for slack in order to trigger slack notification from our Lambda.
 * **WHITELIST_TAG**: At times, there are service accounts which are created as an IAM User(Though not a good practice). Instead, We should consider using IAM Roles for Service Accounts.
@@ -378,6 +382,8 @@ The classic use case which we encountered because of which our Lambda didn't wor
 In order to get this resolved, we have used **get_attached_policy_count()**(Line 183-193) function which will do the heavy lifting for us.
 
 Since we now understand the flow of our lambda function , Let's get our hands rolling on the Cloudformation template.
+
+![Macbook]({{site.baseurl}}/assets/img/lets-go.jpg){: .center-image }
 
 Let's look at our CFT-:
 ```json
@@ -547,3 +553,8 @@ You can see the resources tab in EnforceMFA Stack which shows what all resources
 ### Conclusion
 
 By Combining all the above blocks, we were able to achieve our main objective of getting our IAM users to setup Multi-factor authentication. Using Cloudformation stacksets helped us to Scale so that whenever new account is spin up, the same stack will be created, hence giving us better AWS security.
+
+![Macbook]({{site.baseurl}}/assets/img/Thank-You.png){: .center-image }
+
+Thank you for coming here and for you time. If you were able to gain even a little knowledge from my post, Do Share with others.
+Please feel free to connect with me on LinkedIn and Twitter. 

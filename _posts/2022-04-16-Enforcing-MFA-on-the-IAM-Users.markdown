@@ -50,6 +50,7 @@ Before we dig deeper, In nutshell to understand our methodology, whenever we dep
 
 First things first, since our entire exercise is dependend on our Lambda function, Let's start with that. Below attached is the Lambda code template.
 
+````
 ```Python3
 import json
 import boto3
@@ -333,6 +334,8 @@ def send_slack_notification(status_code,user,account_id):
     return payload
 
 ```
+````
+
 ![Macbook]({{site.baseurl}}/assets/img/take-a-break-break.gif){: .center-image }
 
 We have defined two environment variables in Lambda's Configuration section which we have used in our Lambda function

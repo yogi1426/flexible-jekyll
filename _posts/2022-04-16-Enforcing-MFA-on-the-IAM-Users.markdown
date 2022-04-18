@@ -388,7 +388,7 @@ Let's look at our CFT-:
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description" : "Deploy Lambda Function to attach Force MFA policy to the user who had not enabled Physical/Virtual MFA.",
-  "Parameters" : {
+  "Parameters" : { //Line 4
     "SlackWebhookParameter" : {
       "Type" : "String",
       "Default" : "",
@@ -419,7 +419,7 @@ Let's look at our CFT-:
           "Default" : "",
           "Description" : "Lambda Handler name E.g: <file_name>.lambda_handler"
       }
-    },
+    }, //Line 35
   "Resources": {
     "EnforceMFALambda": {
       "Type": "AWS::Lambda::Function",
@@ -469,7 +469,7 @@ Let's look at our CFT-:
           },
           "Path": "/",
           "Policies": [{
-            "PolicyName": "EnforceMFALambdaPolicy",
+            "PolicyName": "EnforceMFALambdaPolicy", //Line 85
             "PolicyDocument": {
                 "Version": "2012-10-17",
                 "Statement": [
@@ -498,10 +498,10 @@ Let's look at our CFT-:
                     }
                 ]
             }
-          }]
+          }] //Line 114
         }
       },
-      "ScheduledRule": {
+      "ScheduledRule": { //Line 117
         "Type": "AWS::Events::Rule",
         "Properties": {
           "Description": "Rule to trigger EnforceMFA Lambda",
@@ -513,7 +513,7 @@ Let's look at our CFT-:
             "Id": "TargetFunctionV1"
           }]
         }
-      },
+      }, //Line 129
       "PermissionForEventsToInvokeLambda": {
         "Type": "AWS::Lambda::Permission",
         "Properties": {
@@ -530,7 +530,7 @@ You can see the resources tab in EnforceMFA Stack which shows what all resources
 
 ![Macbook]({{site.baseurl}}/assets/img/resources.png){: .center-image }
 
-**Line 354 - 385:**
+**Line 8 - 35:**
 
 > We have defined Parameters in `Parameters` section of Stacks. Our CFT is expecting following parameters:
 > * LambdaHandler : This executes lambda_handler() function of our lambda code.
@@ -540,17 +540,19 @@ You can see the resources tab in EnforceMFA Stack which shows what all resources
 > * SlackWebhookParameter: Slack Web hook url
 > * WhitelistTag: The key:value pair against which we want to whitelist IAM Users(Eg: userType:Service).
 
-**Line 435-465:**
+**Line 85-114:**
 
    > We have created IAM Policy for our lambda function in order to authorise our Lambda to make changes to an IAM user or make changes in our AWS account.
 
-**Line 467-479:** 
+**Line 117-129:** 
 
    > ScheduleRule block is the rule used to trigger EventBridge Service of AWS which helps us to run our EnforceMFALambda every 12PM(UTC).
 
 ### Conclusion
 
 By Combining all the above blocks, we were able to achieve our main objective of getting our IAM users to setup Multi-factor authentication. Using Cloudformation stacksets helped us to Scale so that whenever new account is spin up, the same stack will be created, hence giving us better AWS security.
+
+Special Mentions : My Colleagues **Siddharth** and **Hrushikesh** for helping me whenever I get stuck.
 
 ![Macbook]({{site.baseurl}}/assets/img/Thank-You.png){: .center-image }
 

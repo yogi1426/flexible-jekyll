@@ -50,7 +50,7 @@ Before we dig deeper, In nutshell to understand our methodology, whenever we dep
 
 First things first, since our entire exercise is dependend on our Lambda function, Let's start with that. Below attached is the Lambda code template.
 
-```
+````
 import json
 import boto3
 import os, math
@@ -331,7 +331,7 @@ def send_slack_notification(status_code,user,account_id):
         }"""
     time.sleep(3) # To avoid slack api collusion.
     return payload
-```
+````
 
 ![Macbook]({{site.baseurl}}/assets/img/take-a-break-break.gif){: .center-image }
 
@@ -339,7 +339,7 @@ We have defined two environment variables in Lambda's Configuration section whic
 * **WEBHOOK_URL**: This Environment variable we have used to define Webhook url for slack in order to trigger slack notification from our Lambda.
 * **WHITELIST_TAG**: At times, there are service accounts which are created as an IAM User(Though not a good practice). Instead, We should consider using IAM Roles for Service Accounts.
 
-**Line 34 - 39:** 
+**Line 1 - 6 ** 
 
 We have imported various Libraries which we will be using to achieve the objective.
 

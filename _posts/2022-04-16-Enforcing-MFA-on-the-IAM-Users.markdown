@@ -50,8 +50,8 @@ Before we dig deeper, In nutshell to understand our methodology, whenever we dep
 
 First things first, since our entire exercise is dependend on our Lambda function, Let's start with that. Below attached is the Lambda code template.
 
-{% highlight python %}
 ```
+
 import json
 import boto3
 import os, math
@@ -332,9 +332,8 @@ def send_slack_notification(status_code,user,account_id):
         }"""
     time.sleep(3) # To avoid slack api collusion.
     return payload
-```
-{% endhighlight %}
 
+```
 ![Macbook]({{site.baseurl}}/assets/img/take-a-break-break.gif){: .center-image }
 
 We have defined two environment variables in Lambda's Configuration section which we have used in our Lambda function

@@ -25,10 +25,10 @@ timezone: TIMEZONE
 
 # Build Settings
 markdown: kramdown
-syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    block:
-      line_numbers: true
+kramdown:
+  syntax_highlighter: pygments
+highlighter: pygments
+
 plugins:
   - jekyll-sitemap
   - jekyll-paginate

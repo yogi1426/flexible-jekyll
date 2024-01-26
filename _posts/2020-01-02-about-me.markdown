@@ -6,6 +6,56 @@ description: You’ll find this post in your `_posts` directory. Go ahead and ed
 img: how-to-start.jpg # Add image post (optional)
 
 ---
+
+Hello and welcome to my corner of the web! I'm  Yogendra Swaroop Srivastava, a seasoned Cyber Security Professional with a passion for securing digital landscapes. Currently serving as a Senior Security Engineer at Upstox, I specialize in pioneering Shift-Left Security, DevSecOps, and fortifying Product Security.
+
+## Professional Journey
+
+My cybersecurity journey commenced in February 2020 when I entered the field as a Cyber Security Instructor for the Red team at ThriveDX(Formerly HackerU). In this role, I had the privilege of training aspiring cybersecurity professionals in various domains, including web application security, mobile application security, Python for security, Privilege Escalation for Linux/Windows,and the highly sought-after Offensive Security Certified Professional (OSCP) certification.
+
+Driven by a commitment to hands-on learning, I curated custom vulnerable boxes, allowing learners to practice on OSCP-level challenges. This experience not only enhanced my technical expertise but also fueled my dedication to empowering others in the field.
+
+In July 2021, I joined the dynamic team at MPL as a Security Analyst, quickly progressing to the role of Security Engineer. At MPL, my responsibilities spanned Web, Mobile, and API Security, Threat Modelling, Source Code Review, Cloud Security on AWS/GCP, Web Application Firewall (WAF) implementation, Security Automations, and Threat Intelligence analysis. 
+
+I played a pivotal role in establishing and enhancing the bug bounty program at MPL, elevating the company's security posture. Through this initiative, I have expanded the scope and opportunities for the broader security community to actively contribute to strengthening MPL's defenses. By fostering collaboration with ethical hackers, we've opened new avenues to identify and address potential vulnerabilities, taking MPL's security measures to new heights. 
+
+
+## Current Role at Upstox
+
+I Joined Upstox in October 2023. In my current role at Upstox, I continue to push the boundaries of cybersecurity. As a Senior Security Engineer, I'm at the forefront of adopting Shift-Left Security practices, integrating security seamlessly into the development lifecycle. Embracing DevSecOps principles, I collaborate with cross-functional teams to embed security early on and ensure robust protection throughout the product lifecycle.
+I am currently delving deep into the realms of container and Kubernetes security
+
+## Expertise
+
+In the ever-evolving landscape of cybersecurity, my expertise spans a range of domains, including:
+
+- **Security Automations:** Leveraging the power of automation to enhance security measures, streamline processes, and respond swiftly to emerging threats.
+
+- **Penetration Testing (Web/Mobile/API):** Proficient in conducting thorough penetration tests on web applications, mobile apps, and APIs, uncovering vulnerabilities and providing actionable insights for remediation.
+
+- **Cloud Security (AWS/GCP):** Extensive experience in securing cloud environments, with a focus on AWS and GCP. Implementing robust security measures to safeguard data, applications, and infrastructure in the cloud.
+
+- **Threat Modelling:** Adept at identifying and assessing potential threats and vulnerabilities in systems and applications. Developing threat models to proactively address security risks.
+
+- **Source Code Review:** Conducting meticulous reviews of source code to identify security vulnerabilities, coding errors, and potential risks. Ensuring the integrity and security of software applications.
+
+- **Bug Bounty Program Leadership:** Experienced in managing and leading bug bounty programs. Orchestrating efforts to crowdsource security testing, engaging ethical hackers, and fostering a collaborative environment to identify and address security vulnerabilities.
+
+
+In addition to these specialized areas, my multifaceted approach to cybersecurity encompasses offensive and defensive strategies. From honing offensive skills for red teaming to crafting secure development pipelines, I bring a wealth of experience in navigating the complex landscape of modern cybersecurity.
+
+
+## Let's Connect
+
+Beyond the world of cybersecurity, I'm enthusiastic about community engagement and knowledge sharing. Feel free to connect with me on [LinkedIn](#) and [Twitter](#) to join the conversation.
+
+Thank you for visiting my website, and I look forward to connecting with fellow cybersecurity enthusiasts, industry professionals, and curious minds alike!
+
+Best regards,  
+Yogendra Swaroop Srivastava 
+
+
+
 ### Find My CV here:
 
 [CV]({{site.url}}/assets/Yogendracv.pdf)
